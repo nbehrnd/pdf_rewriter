@@ -1,12 +1,12 @@
 
 # Table of Contents
 
-1.  [Background](#orgcb5ba76)
-2.  [Deployment](#orgcf31780)
-3.  [Test case](#orgc75e045)
+1.  [Background](#orgbb7298b)
+2.  [Deployment](#orgef66eb5)
+3.  [Test case](#orgd4534d4)
 
 
-<a id="orgcb5ba76"></a>
+<a id="orgbb7298b"></a>
 
 # Background
 
@@ -23,7 +23,7 @@ source of the snippets joined is provided, too; so the credit
 belongs to those already in the field.
 
 
-<a id="orgcf31780"></a>
+<a id="orgef66eb5"></a>
 
 # Deployment
 
@@ -50,18 +50,18 @@ Depending on the publisher and the amount of color figures in the
 Enjoy &#x2013; at your own risk.
 
 
-<a id="orgc75e045"></a>
+<a id="orgd4534d4"></a>
 
 # Test case
 
-The scripts' efficienciency is tested in a Linux Xubuntu 18.04.3 LTS
+The scripts' efficiency is tested in a Linux Xubuntu 18.04.3 LTS
 installation including ghostscript (version 9.26) on a review
-article by Kletskov *et al.*<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>.  This was published by Thieme
+article by Kletskov *et al.*<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>  This was published by Thieme
 Verlag Stuttgart, Germany, as open access article under the terms of
 Creative Commons Attributions License, and is stored in its original
 form as file `Kletskov2020.pdf` in the repository.
 
-The original is worth 3.4 MB, features five color potraits of the
+The original is worth 3.4 MB, features five color portraits of the
 authors of the publication, the the sparsely colored layout of the
 journal, line and gray-scale drawings.  The publication does not
 contain visible hyperlinks.
@@ -92,5 +92,4 @@ on the color-reprinted .pdf from above yields the gray-scale
 <sup><a id="fn.3" href="#fnr.3">3</a></sup> "Isothiazoles in the Design and Synthesis of Biologically
 Active Substances and Ligands for Metal Complexes", Kletskov, A. V.;
 Bumagin, N. A.; Zubkov, F. I.; Grudini, D. G.; Potkin,
-V. I. *Synthesis*, **2020**, *52*, 159&#x2013;188, doi:
-10.1055/s-0039-1690688.
+V. I. *Synthesis*, **2020**, *52*, 159&#x2013;188, [doi 10.1055/s-0039-1690688](https://www.thieme-connect.de/products/ejournals/abstract/10.1055/s-0039-1690688).

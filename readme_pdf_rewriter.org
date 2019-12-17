@@ -44,14 +44,14 @@
 
 * Test case
 
-  The scripts' efficienciency is tested in a Linux Xubuntu 18.04.3 LTS
+  The scripts' efficiency is tested in a Linux Xubuntu 18.04.3 LTS
   installation including ghostscript (version 9.26) on a review
-  article by Kletskov /et al./[fn:3].  This was published by Thieme
+  article by Kletskov /et al./[fn:3]  This was published by Thieme
   Verlag Stuttgart, Germany, as open access article under the terms of
   Creative Commons Attributions License, and is stored in its original
   form as file =Kletskov2020.pdf= in the repository.
 
-  The original is worth 3.4 MB, features five color potraits of the
+  The original is worth 3.4 MB, features five color portraits of the
   authors of the publication, the the sparsely colored layout of the
   journal, line and gray-scale drawings.  The publication does not
   contain visible hyperlinks.
@@ -76,8 +76,7 @@
 [fn:3] "Isothiazoles in the Design and Synthesis of Biologically
 Active Substances and Ligands for Metal Complexes", Kletskov, A. V.;
 Bumagin, N. A.; Zubkov, F. I.; Grudini, D. G.; Potkin,
-V. I. /Synthesis/, *2020*, /52/, 159--188, doi:
-10.1055/s-0039-1690688.
+V. I. /Synthesis/, *2020*, /52/, 159--188, [[https://www.thieme-connect.de/products/ejournals/abstract/10.1055/s-0039-1690688][doi 10.1055/s-0039-1690688]].
 
 [fn:2] see https://unix.stackexchange.com/questions/93959/how-to-convert-a-color-pdf-to-black-white
 
