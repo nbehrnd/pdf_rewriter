@@ -1,0 +1,83 @@
+
+# name:   readme_pdf_rewriter.org
+# author: nbehrnd@yahoo.com
+# date:   2019-12-17 (YYYY-MM-DD)
+
+
+* Background
+
+  Occasionally, =*.pdf= -- including contemporary scientific
+  publications -- contain more (file) content, than needed to read.
+  Often, the file size may be reduced without harm to the searchable
+  text layer, though, by passing them to ghostscript for an additional
+  "print to *.pdf".
+
+  By far, the bash script /does not/ claim to be the first one
+  collecting bits and bolts to address the issue, rather serves as an
+  aide-memoire of finds encountered earlier.  Within reason, the
+  source of the snippets joined is provided, too; so the credit
+  belongs to those already in the field.
+
+* Deployment
+
+  + To work, provide the bash script the executable bit with =chmod.=
+    To reprint the =*.pdf= while retaining the color, run
+    #+BEGIN_SRC shell
+      ./pdf_rewrite.sh in.pdf rp
+     #+END_SRC
+    -- maybe more than once.  The underlying script by Evan Langlois[fn:1]
+    states in any case if the newly written file (of same name as the
+    input file) is smaller than the original one, or not.
+
+  + To reprint the =*.pdf= just in gray-scale, run
+    #+BEGIN_SRC shell
+      ./pdf_rewrite.sh in.pdf gray
+    #+END_SRC
+    which will generate a gray-scaled file =output.pdf=; retaining the
+    searchable text layer.  The credit for this belongs to user =slm=
+    on the unix stackexchange.[fn:2]
+
+  Depending on the publisher and the amount of color figures in the
+  =*.pdf= contains, savings in the range of 20 to 30% may be achieved.
+
+  Enjoy -- at your own risk.
+
+* Test case
+
+  The scripts' efficiency is tested in a Linux Xubuntu 18.04.3 LTS
+  installation including ghostscript (version 9.26) on a review
+  article by Kletskov /et al./[fn:3]  This was published by Thieme
+  Verlag Stuttgart, Germany, as open access article under the terms of
+  Creative Commons Attributions License, and is stored in its original
+  form as file =Kletskov2020.pdf= in the repository.
+
+  The original is worth 3.4 MB, features five color portraits of the
+  authors of the publication, the the sparsely colored layout of the
+  journal, line and gray-scale drawings.  The publication does not
+  contain visible hyperlinks.
+
+  The shell script is provided the executable bit.  Running
+  #+BEGIN_SRC shell
+    ./pdf_rewrite.sh Kletskov2020.pdf rp
+  #+END_SRC
+  in just one cycle decreases the file size of the .pdf file to
+  2.3 MB, corresponding to a saving of 1.1 MB (about 32% of the
+  original file size).
+
+  Running
+  #+BEGIN_SRC shell
+    ./pdf_rewrite.sh Kletskov2020.pdf gray
+  #+END_SRC
+  on the color-reprinted .pdf from above yields the gray-scale
+  =output.pdf= of 677 kB with an additional saving of 0.4 MB (about
+  12% of the original file size).
+* Footnotes
+
+[fn:3] "Isothiazoles in the Design and Synthesis of Biologically
+Active Substances and Ligands for Metal Complexes", Kletskov, A. V.;
+Bumagin, N. A.; Zubkov, F. I.; Grudini, D. G.; Potkin,
+V. I. /Synthesis/, *2020*, /52/, 159--188, [[https://www.thieme-connect.de/products/ejournals/abstract/10.1055/s-0039-1690688][doi 10.1055/s-0039-1690688]].
+
+[fn:2] see https://unix.stackexchange.com/questions/93959/how-to-convert-a-color-pdf-to-black-white
+
+[fn:1] see https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1
