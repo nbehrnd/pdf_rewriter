@@ -4,7 +4,7 @@
 # author:  nbehrnd@yahoo.com
 # license: 2019, MIT
 # date:    2019-12-17 (YYYY-MM-DD)
-#
+# edit:    2019-12-19 (YYYY-MM-DD)
 
 # Aiming to reduce file size of .pdf to be sent as an attachment,
 # this bash script brings finds of different places together.  After
@@ -78,7 +78,10 @@ elif [ "$2" == "gray" ]; then
     # 'Subject', 'Keywords', 'Author', 'Pages' are retained from the
     # original.  'Producer' (e.g., GPL Ghostscript), 'CreationDate',
     # 'ModDate' however obviously are subject to change during this
-    # modification.  Output is file output.pdf.
+    # modification.
+    # Contrasting to the original code, the output is written on expense
+    # of the original file.  This prevents overwriting 'grayed .pdf'
+    # while processing multiple files in one session.
 
     gs \
      -sOutputFile=output.pdf \
@@ -89,6 +92,9 @@ elif [ "$2" == "gray" ]; then
      -dNOPAUSE \
      -dBATCH \
      $1
+
+    # addition:
+    mv output.pdf $1
 
 #  final coda:
 fi
