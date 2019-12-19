@@ -2,7 +2,7 @@
 # name:   readme_pdf_rewriter.org
 # author: nbehrnd@yahoo.com
 # date:   2019-12-17 (YYYY-MM-DD)
-
+# edit:   2019-12-19 (YYYY-MM-DD)
 
 * Background
 
@@ -33,12 +33,13 @@
     #+BEGIN_SRC shell
       ./pdf_rewrite.sh in.pdf gray
     #+END_SRC
-    which will generate a gray-scaled file =output.pdf=; retaining the
-    searchable text layer.  The credit for this belongs to user =slm=
-    on the unix stackexchange.[fn:2]
+    which will replace the original =.pdf= by a gray-scaled one.  The
+    searchable text layer is retained.  The credit for this belongs to
+    user =slm= on the unix stackexchange.[fn:2]
 
   Depending on the publisher and the amount of color figures in the
   =*.pdf= contains, savings in the range of 20 to 30% may be achieved.
+  Because ghostscript cares for printers, hyperlinks may be removed.
 
   Enjoy -- at your own risk.
 
