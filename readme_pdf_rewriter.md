@@ -1,12 +1,12 @@
 
 # Table of Contents
 
-1.  [Background](#orgbb7298b)
-2.  [Deployment](#orgef66eb5)
-3.  [Test case](#orgd4534d4)
+1.  [Background](#orgd81ff46)
+2.  [Deployment](#org6719e61)
+3.  [Test case](#orgd903c91)
 
 
-<a id="orgbb7298b"></a>
+<a id="orgd81ff46"></a>
 
 # Background
 
@@ -23,34 +23,40 @@ source of the snippets joined is provided, too; so the credit
 belongs to those already in the field.
 
 
-<a id="orgef66eb5"></a>
+<a id="org6719e61"></a>
 
 # Deployment
 
 -   To work, provide the bash script the executable bit with `chmod.`
-    To reprint the `*.pdf` while retaining the color, run
+    To reprint the `*.pdf` while retaining the color, run either one
+    of the following commands:
     
-        ./pdf_rewrite.sh in.pdf rp
+        ./pdf_rewrite.sh -c in.pdf  # short command version
+        ./pdf_rewrite.sh --color in.pdf  # long command version
+        ./pdf_rewrite.sh --reprint in.pdf  # long command version
     
     &#x2013; maybe more than once.  The underlying script by Evan Langlois<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
     states in any case if the newly written file (of same name as the
     input file) is smaller than the original one, or not.
 
--   To reprint the `*.pdf` just in gray-scale, run
+-   To reprint the `*.pdf` just in gray-scale, run either one of the
+    following commands:
     
-        ./pdf_rewrite.sh in.pdf gray
+        ./pdf_rewrite.sh -g in.pdf  # short command version
+        ./pdf_rewrite.sh --gray in.pdf  # long command version
     
-    which will generate a gray-scaled file `output.pdf`; retaining the
-    searchable text layer.  The credit for this belongs to user `slm`
-    on the unix stackexchange.<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
+    which will replace the original `.pdf` by a gray-scaled one.  The
+    searchable text layer is retained.  The credit for this belongs to
+    user `slm` on the unix stackexchange.<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
 
 Depending on the publisher and the amount of color figures in the
 `*.pdf` contains, savings in the range of 20 to 30% may be achieved.
+Because ghostscript cares for printers, hyperlinks may be removed.
 
 Enjoy &#x2013; at your own risk.
 
 
-<a id="orgd4534d4"></a>
+<a id="orgd903c91"></a>
 
 # Test case
 
@@ -66,21 +72,14 @@ authors of the publication, the the sparsely colored layout of the
 journal, line and gray-scale drawings.  The publication does not
 contain visible hyperlinks.
 
-The shell script is provided the executable bit.  Running
-
-    ./pdf_rewrite.sh Kletskov2020.pdf rp
-
-in just one cycle decreases the file size of the .pdf file to
+The shell script is provided the executable bit.  Running the
+reprint instruction once decreases the file size of the .pdf file to
 2.3 MB, corresponding to a saving of 1.1 MB (about 32% of the
 original file size).
 
-Running
-
-    ./pdf_rewrite.sh Kletskov2020.pdf gray
-
-on the color-reprinted .pdf from above yields the gray-scale
-`output.pdf` of 677 kB with an additional saving of 0.4 MB (about
-12% of the original file size).
+Departing from the file already reprinted (retaining the color
+information) yields the gray-scale `output.pdf` of 677 kB with an
+additional saving of 0.4 MB (about 12% of the original file size).
 
 
 # Footnotes
