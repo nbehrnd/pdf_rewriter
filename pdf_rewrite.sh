@@ -4,17 +4,17 @@
 # author:  nbehrnd@yahoo.com
 # license: 2019, MIT
 # date:    2019-12-17 (YYYY-MM-DD)
-#
+# edit:    2019-12-22 (YYYY-MM-DD)
 
 # Aiming to reduce file size of .pdf to be sent as an attachment,
 # this bash script brings finds of different places together.  After
 # provision of the executable bit by chmod, the call pattern is
 #
-# ./pdf_rewrite in_file.pdf [rp | gray]
+# ./pdf_rewrite [-c | --color | --reprint | -g | --gray] input.pdf
 #
-# to yield the output .pdf file either as
-# + reprint in either colorscale, or
-# + a reprint constrained to gray scale.
+# to yield the output .pdf file of same name as the original input, either
+# + as a reprint retaining existing color scale (either -c, or --reprint)
+# + as a reprint constrained to gray scale (either -g, or --gray)
 #
 # Often, the later still is 'good enough'  especially with modern .pdf
 # by journal publications.  It requires an installation of ghostscript
@@ -22,7 +22,7 @@
 #
 # No warranties -- To be used on your own risk.
 
-if [ "$2" == "rp" ]; then
+if [[ "$1" == "-c" ]] || [[ "$1" == "--color" ]] || [[ "$1" == "--reprint" ]] ; then
 
     # 'reprint as such'
     #
@@ -38,7 +38,7 @@ if [ "$2" == "rp" ]; then
     #
     # so the credit to figuring out the following belongs to him:
 
-    file="$1"
+    file="$2"
     filebase="$(basename "$file" .pdf)"
     optfile="/tmp/$$-${filebase}_opt.pdf"
     gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
@@ -64,7 +64,7 @@ if [ "$2" == "rp" ]; then
         mv "${optfile}" "${file}"
     fi
 
-elif [ "$2" == "gray" ]; then
+elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]]; then
 
     # A reprint in grayscale (often sufficent for modern journal .pdf),
     # while retaining the searchable text layer.  The script was found
@@ -78,7 +78,10 @@ elif [ "$2" == "gray" ]; then
     # 'Subject', 'Keywords', 'Author', 'Pages' are retained from the
     # original.  'Producer' (e.g., GPL Ghostscript), 'CreationDate',
     # 'ModDate' however obviously are subject to change during this
-    # modification.  Output is file output.pdf.
+    # modification.
+    # Contrasting to the original code, the output is written on expense
+    # of the original file.  This prevents overwriting 'grayed .pdf'
+    # while processing multiple files in one session.
 
     gs \
      -sOutputFile=output.pdf \
@@ -88,7 +91,10 @@ elif [ "$2" == "gray" ]; then
      -dCompatibilityLevel=1.4 \
      -dNOPAUSE \
      -dBATCH \
-     $1
+     $2
+
+    # addition, name the output like the original read:
+    mv output.pdf $2
 
 #  final coda:
 fi
