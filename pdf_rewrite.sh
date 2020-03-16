@@ -2,9 +2,9 @@
 
 # name:    pdf_rewrite.sh
 # author:  nbehrnd@yahoo.com
-# license: 2019, MIT
+# license: 2019, 2020 MIT
 # date:    2019-12-17 (YYYY-MM-DD)
-# edit:    2019-12-22 (YYYY-MM-DD)
+# edit:    2020-03-16 (YYYY-MM-DD)
 
 # Aiming to reduce file size of .pdf to be sent as an attachment,
 # this bash script brings finds of different places together.  After
@@ -18,7 +18,7 @@
 #
 # Often, the later still is 'good enough'  especially with modern .pdf
 # by journal publications.  It requires an installation of ghostscript
-# as by typical Linuxes e.g., Xubuntu 18.04.3 LTS.
+# as by typical Linuxes e.g., Xubuntu 18.04.3 LTS (which is gs 9.26).
 #
 # No warranties -- To be used on your own risk.
 
@@ -31,7 +31,8 @@ if [[ "$1" == "-c" ]] || [[ "$1" == "--color" ]] || [[ "$1" == "--reprint" ]] ; 
     # the savings obtained, or that a further shrinkage isn't obtained.
     # The output file will have the same name as the inpupt file.
     #
-    # Except of the loop to direct the work into this branch, this is the
+    # Except of the loop to direct the work into this branch, and addition
+    # of the -dPrinted=false instruction to reatin hyperlinks, this is the
     # answer by Evan Langlois to
     #
     # https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1
@@ -42,7 +43,7 @@ if [[ "$1" == "-c" ]] || [[ "$1" == "--color" ]] || [[ "$1" == "--reprint" ]] ; 
     filebase="$(basename "$file" .pdf)"
     optfile="/tmp/$$-${filebase}_opt.pdf"
     gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
-            -sOutputFile="${optfile}" "${file}"
+            -dPrinted=false -sOutputFile="${optfile}" "${file}"
 
     if [ $? == '0' ]; then
         optsize=$(stat -c "%s" "${optfile}")
@@ -81,7 +82,8 @@ elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]]; then
     # modification.
     # Contrasting to the original code, the output is written on expense
     # of the original file.  This prevents overwriting 'grayed .pdf'
-    # while processing multiple files in one session.
+    # while processing multiple files in one session.  By dPrinted=false,
+    # hyperlinks remain.
 
     gs \
      -sOutputFile=output.pdf \
@@ -91,6 +93,7 @@ elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]]; then
      -dCompatibilityLevel=1.4 \
      -dNOPAUSE \
      -dBATCH \
+     -dPrinted=false \
      $2
 
     # addition, name the output like the original read:
