@@ -41,7 +41,10 @@ belongs to those already in the field.
 
 Depending on the publisher and the amount of color figures in the
 `*.pdf` contains, savings in the range of 20 to 30% may be achieved.
-Because ghostscript cares for printers, hyperlinks may be removed.
+As shown with the test file `link_example.pdf`, hyperlinks within
+the document (e.g., table of contents) as well as those reaching out
+(e.g., hyperlinked literature references / web sites) may be
+preserved.
 
 Enjoy &#x2013; at your own risk.
 
