@@ -22,6 +22,7 @@ belongs to those already in the field.
     of the following commands:
     
         ./pdf_rewrite.sh -c in.pdf
+        ./pdf_rewrite.sh --colour in.pdf
         ./pdf_rewrite.sh --color in.pdf
         ./pdf_rewrite.sh --reprint in.pdf
     
@@ -34,6 +35,7 @@ belongs to those already in the field.
     
         ./pdf_rewrite.sh -g in.pdf
         ./pdf_rewrite.sh --gray in.pdf
+        ./pdf_rewrite.sh --grey in.pdf
     
     which will replace the original `.pdf` by a gray-scaled one.  The
     searchable text layer is retained.  The credit for this belongs to
