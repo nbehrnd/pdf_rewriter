@@ -4,7 +4,7 @@
 # author:  nbehrnd@yahoo.com
 # license: 2020
 # date:    2020-06-15 (YYYY-MM-DD)
-# edit:
+# edit:    2020-06-15 (YYYY-MM-DD)
 
 # Batch reprint of all .pdf in a folder.
 #
@@ -19,11 +19,14 @@
 #
 # ./reprint_all.sh
 #
-# aims to reprint the .pdf in the current working directory in color.  It
-# will overwrite the original .pdf in this folder.
+# aims to reprint the .pdf in the current working directory in color.  As
+# it may overwrite overwrite the original .pdf in this folder, keep a 
+# backup of them.  Provide enough (working) memory for the batch to work,
+# otherwise the .pdf won't be closed correctly as intelligible files.
 
 for file in *.pdf; do
 
+    echo ""
     echo $file
     file="$file"
     filebase="$(basename "$file" .pdf)"
@@ -36,13 +39,15 @@ for file in *.pdf; do
         orgsize=$(stat -c "%s" "${file}")
         if [ "${optsize}" -eq 0 ]; then
             echo "No output!  Keeping original"
-            rm -f "${optfile}"
-            exit;
+            rm -f "${optfile}";
+#            exit;
+            continue;
         fi
         if [ ${optsize} -ge ${orgsize} ]; then
             echo "Didn't make it smaller! Keeping original"
             rm -f "${optfile}"
-            exit;
+#            exit;
+            continue;
         fi
         bytesSaved=$(expr $orgsize - $optsize)
         percent=$(expr $optsize '*' 100 / $orgsize)
