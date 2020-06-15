@@ -4,17 +4,18 @@
 # author:  nbehrnd@yahoo.com
 # license: 2019, 2020 MIT
 # date:    2019-12-17 (YYYY-MM-DD)
-# edit:    2020-03-16 (YYYY-MM-DD)
+# edit:    2020-06-15 (YYYY-MM-DD)
 
-# Aiming to reduce file size of .pdf to be sent as an attachment,
+# Aiming to reduce file size of a .pdf to be sent as an attachment,
 # this bash script brings finds of different places together.  After
 # provision of the executable bit by chmod, the call pattern is
 #
-# ./pdf_rewrite [-c | --color | --reprint | -g | --gray] input.pdf
+# ./pdf_rewrite [-c | --colour | --color | --reprint | -g | --gray | --grey] input.pdf
 #
 # to yield the output .pdf file of same name as the original input, either
-# + as a reprint retaining existing color scale (either -c, or --reprint)
-# + as a reprint constrained to gray scale (either -g, or --gray)
+# + as a reprint retaining existing color scale (either -c, -r, --color,
+# --colour, or --reprint)
+# + as a reprint constrained to gray scale (either -g, or --gray, or --grey)
 #
 # Often, the later still is 'good enough'  especially with modern .pdf
 # by journal publications.  It requires an installation of ghostscript
@@ -22,7 +23,7 @@
 #
 # No warranties -- To be used on your own risk.
 
-if [[ "$1" == "-c" ]] || [[ "$1" == "--color" ]] || [[ "$1" == "--reprint" ]] ; then
+if [[ "$1" == "-c" || "--colour" || "--color" || "-r" || "--reprint" ]] ; then
 
     # 'reprint as such'
     #
@@ -65,7 +66,8 @@ if [[ "$1" == "-c" ]] || [[ "$1" == "--color" ]] || [[ "$1" == "--reprint" ]] ; 
         mv "${optfile}" "${file}"
     fi
 
-elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]]; then
+# elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; then
+elif [[ "$1" == "-g" || "--gray" || "--grey" ]] ; then
 
     # A reprint in grayscale (often sufficent for modern journal .pdf),
     # while retaining the searchable text layer.  The script was found
