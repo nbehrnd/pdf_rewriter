@@ -99,6 +99,16 @@ The improved script was found working well on Linux Xubuntu with gs
 9.26.
 
 
+# Batch conversion
+
+If working with a literature reference program like [zotero](https://www.zotero.org/), it may
+be useful to apply these simplifications on a batch of `.pdf` files
+in one folder.  As a concept study, scripts `reprint_all.sh` and
+`gray_all.sh` thus moderate `ghostscript` to reprint either all
+while retaining color (if present), or all `.pdf` in gray scale
+only.  This relays the same set of paramaters as `pdf_rewrite.sh`.
+
+
 # Footnotes
 
 <sup><a id="fn.1" href="#fnr.1">1</a></sup> <https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1>
