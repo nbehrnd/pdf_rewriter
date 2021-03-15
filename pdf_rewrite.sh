@@ -4,7 +4,7 @@
 # author:  nbehrnd@yahoo.com
 # license: 2019, 2020 MIT
 # date:    2019-12-17 (YYYY-MM-DD)
-# edit:    2020-06-15 (YYYY-MM-DD)
+# edit:    2021-03-15 (YYYY-MM-DD)
 
 # Aiming to reduce file size of a .pdf to be sent as an attachment,
 # this bash script brings finds of different places together.  After
@@ -23,11 +23,37 @@
 #
 # No warranties -- To be used on your own risk.
 
-if [[ "$1" == "-c" || "--colour" || "--color" || "-r" || "--reprint" ]] ; then
+if [[ -z "$1" ]] ; then
+    printf "Error. The minimal input is: pdf_rewrite.sh -h\n"
+
+elif [[ "$1" == "-h" ]] ; then
+    printf "
+To reduce the file size of a .pdf, this script relays the file to
+ghostscript.  Often, the reprint's file size is smaller than the of
+the input.  Typically, a pdf's searchable text layer is retained.
+
+The typical input pattern for this script is:
+
+    ./pdf_rewrite --reprint input.pdf
+
+Parameters available to this script are:
+
+    -h                                         access this help menu
+    -c, --colour, --color; -r, or --reprint    reprint in color
+    -g, --gray, or --grey                      reprint in gray scale
+
+On occasion, you may loose internal crosslinks (like the table of
+contents), or hyperlinks to external references may be lost applying
+this.  This depends on the input file -- see the test files of this
+project, or an example like https://doi.org/10.1021/acs.jchemed.7b00361.
+After all, ghostscript prepares a file eventually print.\n\n"
+
+
+elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" || "$1" == "--reprint" ]] ; then
 
     # 'reprint as such'
     #
-    # Often, hyperlinks in publications are lost by this.  Color and the
+    # Sometimes, this removes cross- or / and hyperlinks.  Color and the
     # searchable text layer however typically remain.  It either states
     # the savings obtained, or that a further shrinkage isn't obtained.
     # The output file will have the same name as the inpupt file.
@@ -66,8 +92,7 @@ if [[ "$1" == "-c" || "--colour" || "--color" || "-r" || "--reprint" ]] ; then
         mv "${optfile}" "${file}"
     fi
 
-# elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; then
-elif [[ "$1" == "-g" || "--gray" || "--grey" ]] ; then
+elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; then
 
     # A reprint in grayscale (often sufficent for modern journal .pdf),
     # while retaining the searchable text layer.  The script was found
