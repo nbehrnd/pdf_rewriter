@@ -4,7 +4,7 @@
 # author:  nbehrnd@yahoo.com
 # license: 2019, 2020 MIT
 # date:    2019-12-17 (YYYY-MM-DD)
-# edit:    2021-03-01 (YYYY-MM-DD)
+# edit:    2021-03-15 (YYYY-MM-DD)
 
 # Aiming to reduce file size of a .pdf to be sent as an attachment,
 # this bash script brings finds of different places together.  After
@@ -45,7 +45,8 @@ Parameters available to this script are:
 On occasion, you may loose internal crosslinks (like the table of
 contents), or hyperlinks to external references may be lost applying
 this.  This depends on the input file -- see the test files of this
-project, or an example like https://doi.org/10.1021/acs.jchemed.7b00361.  After all, ghostscript prepares a file eventually print.\n"
+project, or an example like https://doi.org/10.1021/acs.jchemed.7b00361.
+After all, ghostscript prepares a file eventually print.\n\n"
 
 
 elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" || "$1" == "--reprint" ]] ; then
