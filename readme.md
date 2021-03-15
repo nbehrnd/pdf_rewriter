@@ -24,6 +24,7 @@ belongs to those already in the field.
         ./pdf_rewrite.sh -c in.pdf
         ./pdf_rewrite.sh --colour in.pdf
         ./pdf_rewrite.sh --color in.pdf
+        ./pdf_rewrite.sh -r in.pdf
         ./pdf_rewrite.sh --reprint in.pdf
     
     &#x2013; maybe more than once.  The underlying script by Evan Langlois<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
@@ -77,26 +78,30 @@ additional saving of 0.4 MB (about 12% of the original file size).
 
 # Test case B
 
-Earlier versions of this script were capable to remove "inner
-hyperlinks", e.g., interactive cross references from the body of a
-publication to its literature section and hyperlinks reaching to
-external references (e.g., web sites).  It however seems useful to
-keep this information in the `.pdf` available.
+For a local check, you may run the script on file
+`link_example.pdf`.  This contains a simple color image from
+<http://www.texample.net> with a hyperlink to the original `.tex`
+source file slightly adapted here, `link_example.tex`, suitable for
+a compilation with `pdfLaTeX`.  The frame around the url in the .pdf
+is one (the default) option to indicate an URL which *some* pdf
+readers display, but not necessary relay if the document is print.
 
-The required keyword instruction, `-dPrinted=false`, was indentified
-in a discussion on [tex.stackexchange](https://tex.stackexchange.com/questions/456896/set-the-print-flag-on-links-with-hyperref-to-preserve-them-with-ghostscript-9), and implemented in either of
-the two branches of the script on March 16th, 2020.
+For a scientific publication containing cross- and hyperlinks, see
+Elgrishi *et al.* in their Open Access publication about
+Cyclovoltammetry (*J. Chem. Educ.* ****2018****, *95*, 197&#x2013;206; doi
+[10.1021/acs.jchemed.7b00361](https://doi.org/10.1021/acs.jchemed.7b00361)).  Starting with a .pdf of 2.2 MB, the
+reprint in color yields a file of 1.7 MB, the reprint in gray scale a
+file of 1.2 MB.  Both conversions retain cross- and hyperlinks.
 
-Its working may be tested on `link_example.pdf`.  This contains a
-simple color image from <http://www.texample.net> with a hyperlink to
-the original `.tex` source file slightly adapted here,
-`link_example.tex`, suitable for a compilation with `pdfLaTeX`.  The
-frame around the url in the .pdf is one (the default) option to
-indicate an URL which *some* pdf readers display, but not necessary
-relay if the document is print.
 
-The improved script was found working well on Linux Xubuntu with gs
-9.26.
+# Batch conversion
+
+If working with a literature reference program like [zotero](https://www.zotero.org/), it may
+be useful to apply these simplifications on a batch of `.pdf` files
+in one folder.  As a concept study, scripts `reprint_all.sh` and
+`gray_all.sh` thus moderate `ghostscript` to reprint either all
+while retaining color (if present), or all `.pdf` in gray scale
+only.  This relays the same set of parameters as `pdf_rewrite.sh`.
 
 
 # Footnotes
