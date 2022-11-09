@@ -77,6 +77,15 @@
   report problems while processing the data (or even crash), it /is
   not/ a PDF validator such as e.g., veraPDF.[fn:3]
   
+* Batch conversion
+  
+  If working with a literature reference program like [[https://www.zotero.org/][zotero]], it may
+  be useful to apply these simplifications on a batch of =.pdf= files
+  in one folder.  As a concept study, scripts =reprint_all.sh= and
+  =gray_all.sh= thus moderate =ghostscript= to reprint either all
+  while retaining color (if present), or all =.pdf= in gray scale
+  only.  This relays the same set of parameters as =pdf_rewrite.sh=.
+
 * Test case A
 
   The scripts' efficiency is tested in a Linux Xubuntu 18.04.3 LTS
@@ -117,15 +126,6 @@
   reprint in color yields a file of 1.7 MB, the reprint in gray scale a
   file of 1.2 MB.  Both conversions retain cross- and hyperlinks.
 
-
-* Batch conversion
-  
-  If working with a literature reference program like [[https://www.zotero.org/][zotero]], it may
-  be useful to apply these simplifications on a batch of =.pdf= files
-  in one folder.  As a concept study, scripts =reprint_all.sh= and
-  =gray_all.sh= thus moderate =ghostscript= to reprint either all
-  while retaining color (if present), or all =.pdf= in gray scale
-  only.  This relays the same set of parameters as =pdf_rewrite.sh=.
 
 * Footnotes
 
