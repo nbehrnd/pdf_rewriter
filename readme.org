@@ -17,8 +17,9 @@
   By far, this bash script /does not/ claim to be the first one
   collecting bits and bolts to address the issue.  It rather serves as
   an aide-memoire of finds encountered earlier, and to moderate
-  =ghostscript= accordingly.  Within reason, the snippets were joined
-  as provided; thus, the credit belongs to those already in the field.
+  =ghostscript= in Linux accordingly.  Within reason, the snippets
+  were joined as provided; thus, the credit belongs to those already
+  in the field.
   
 * Intended Use
 
@@ -77,14 +78,21 @@
   report problems while processing the data (or even crash), it /is
   not/ a PDF validator such as e.g., veraPDF.[fn:3]
   
-* Batch conversion
-  
-  If working with a literature reference program like [[https://www.zotero.org/][zotero]], it may
-  be useful to apply these simplifications on a batch of =.pdf= files
-  in one folder.  As a concept study, scripts =reprint_all.sh= and
-  =gray_all.sh= thus moderate =ghostscript= to reprint either all
-  while retaining color (if present), or all =.pdf= in gray scale
-  only.  This relays the same set of parameters as =pdf_rewrite.sh=.
+* Batch Conversion
+
+  To process multiple =.pdf=, a for-loop in your shell could follow
+  the pattern of
+
+  #+begin_src shell
+    for file in *.pdf
+    do
+        echo "$file"
+        bash ./pdf_rewrite.sh -r "$file"
+    done    
+  #+end_src
+
+  This equally provides you a simple progress report, too.
+
 
 * Test case A
 
