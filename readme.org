@@ -48,7 +48,7 @@
     remaining file size.
 
     The credit for the underlying approach and implementation belongs
-    to Evan Langlois.[fn:1]
+    to Evan Langlois.[fn:Langlois]
 
   + Often, an additional reduction of file size may be obtained by
     reprinting the =.pdf= in gray-scale only.  Either one of the
@@ -62,7 +62,7 @@
 
     to replace file =input.pdf= by its rewritten form.  The credit for
     this approach belongs to user =slm= on the Unix
-    stackexchange.[fn:2]
+    stackexchange.[fn:slm]
 
   + To process multiple =.pdf=, a for-loop in your shell could follow
     the pattern of
@@ -90,59 +90,48 @@
   Keep a backup of the .pdf to be processed.  Though the script may
   report problems while processing the data (or even crash, which may
   destroy the .pdf), it /is not/ a PDF validator such as e.g.,
-  veraPDF.[fn:3]
+  veraPDF.[fn:verapdf]
 
+* Benchmark
 
-* Test case A
+  Initially written for Linux Xubuntu 18.04.3 LTS and ghostscript
+  (version 9.26), the archive includes two .pdf files to check the
+  scripts action e.g., with Debian 12/bookworm (currently /testing/)
+  and ghostscript (version 10.00.0).
 
-  The scripts' efficiency is tested in a Linux Xubuntu 18.04.3 LTS
-  installation including ghostscript (version 9.26) on a review
-  article by Kletskov /et al./[fn:4]  This was published by Thieme
-  Verlag Stuttgart, Germany, as open access article under the terms of
-  Creative Commons Attributions License, and is stored in its original
-  form as file =Kletskov2020.pdf= in the repository.
+  + File =link2web.pdf= was compiled with pdfLaTeX based on an example
+    provided by [[http://www.texample.net/tikz/examples/lune-of-hippocrates/][www.texample.net]].  This .pdf contains a color figure
+    and link to an external reference.  Note, the simplification into
+    half-tones (option =-g=) affects the document printed, depending
+    on the pdf viewer used, the box around the link may remain colored
+    /for the display on screen/.
+    
+  + File Kletskov2020.pdf is a contemporay research
+    article[fn:Kletskov2020] including text, colour line art, and
+    photographs which was published under a permissive Creative
+    Commons license.
 
-  The original is worth 3.4 MB, features five color portraits of the
-  authors of the publication, the the sparsely colored layout of the
-  journal, line and gray-scale drawings.  The publication does not
-  contain visible hyperlinks.
+  In the table below, /savings/ computes the difference of the file
+  size prior and after the processing with either option, then reports
+  this change as percentage in respect to the original file size.
 
-  The shell script is provided the executable bit.  Running the
-  reprint instruction once decreases the file size of the .pdf file to
-  2.3 MB, corresponding to a saving of 1.1 MB (about 32% of the
-  original file size).
-
-  Departing from the file already reprinted (retaining the color
-  information) yields the gray-scale =output.pdf= of 677 kB with an
-  additional saving of 0.4 MB (about 12% of the original file size).
-
-* Test case B
-
-  For a local check, you may run the script on file
-  =link_example.pdf=.  This contains a simple color image from
-  [[http://www.texample.net]] with a hyperlink to the original =.tex=
-  source file slightly adapted here, =link_example.tex=, suitable for
-  a compilation with =pdfLaTeX=.  The frame around the url in the .pdf
-  is one (the default) option to indicate an URL which /some/ pdf
-  readers display, but not necessary relay if the document is print.
-
-  For a scientific publication containing cross- and hyperlinks, see
-  Elgrishi /et al./ in their Open Access publication about
-  Cyclovoltammetry (/J. Chem. Educ./ **2018**, /95/, 197--206; doi
-  [[https://doi.org/10.1021/acs.jchemed.7b00361][10.1021/acs.jchemed.7b00361]]).  Starting with a .pdf of 2.2 MB, the
-  reprint in color yields a file of 1.7 MB, the reprint in gray scale a
-  file of 1.2 MB.  Both conversions retain cross- and hyperlinks.
-
+  | file name        | original size | by flag =-r= | savings | by flag =-g= | savings |
+  |                  |         [kiB] |        [kiB] |     [%] |        [kiB] |     [%] |
+  |------------------+---------------+--------------+---------+--------------+---------|
+  | link2web.pdf     |          38.0 |          9.8 |    74.2 |          9.8 |    74.2 |
+  | Kletskov2020.pdf |          3405 |         2288 |    32.8 |          658 |    80.7 |
+  #+TBLFM: $4=(($2-$3)/$2)*100; %.1f
+  #+TBLFM: $6=(($2-$5)/$2)*100; %.1f 
 
 * Footnotes
 
-[fn:4] "Isothiazoles in the Design and Synthesis of Biologically
+[fn:Langlois] https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1
+
+[fn:slm] https://unix.stackexchange.com/questions/93959/how-to-convert-a-color-pdf-to-black-white
+
+[fn:verapdf] https://openpreservation.org/tools/verapdf/
+
+[fn:Kletskov2020] "Isothiazoles in the Design and Synthesis of Biologically
 Active Substances and Ligands for Metal Complexes", Kletskov, A. V.;
-Bumagin, N. A.; Zubkov, F. I.; Grudini, D. G.; Potkin,
-V. I. /Synthesis/, *2020*, /52/, 159--188, [[https://www.thieme-connect.de/products/ejournals/abstract/10.1055/s-0039-1690688][doi 10.1055/s-0039-1690688]].
-
-[fn:3] https://openpreservation.org/tools/verapdf/
-
-[fn:2] https://unix.stackexchange.com/questions/93959/how-to-convert-a-color-pdf-to-black-white
-
-[fn:1]  https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1
+Bumagin, N. A.; Zubkov, F. I.; Grudini, D. G.; Potkin, V. I. 
+ /Synthesis/, *2020*, /52/, 159--188, [[https://www.thieme-connect.de/products/ejournals/abstract/10.1055/s-0039-1690688][doi 10.1055/s-0039-1690688]].
