@@ -2,9 +2,9 @@
 
 # name:    pdf_rewrite.sh
 # author:  nbehrnd@yahoo.com
-# license: 2019, 2020 MIT
-# date:    2019-12-17 (YYYY-MM-DD)
-# edit:    2021-03-15 (YYYY-MM-DD)
+# license: 2019-2024 MIT
+# date:    <2019-12-17 Tue>
+# edit:    <2024-01-11 Thu>
 
 # Aiming to reduce file size of a .pdf to be sent as an attachment,
 # this bash script brings finds of different places together.  After
