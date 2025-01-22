@@ -19,7 +19,8 @@
 #
 # Often, the later still is 'good enough'  especially with modern .pdf
 # by journal publications.  It requires an installation of ghostscript
-# as by typical Linuxes e.g., Xubuntu 18.04.3 LTS (which is gs 9.26).
+# as by typical Linuxes e.g., Xubuntu 22.04 LTS (which is gs 9.55), or
+# Debian 13/trixie (gs 10.04.0).
 #
 # No warranties -- To be used on your own risk.
 

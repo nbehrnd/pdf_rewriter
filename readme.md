@@ -13,7 +13,7 @@ of finds encountered earlier, and to moderate `ghostscript` in Linux
 accordingly. Within reason, the snippets were joined as provided; thus,
 the credit belongs to those already in the field.
 
-# Intended Use
+## Intended Use
 
 One use consists of 1) the provision of the executable bit (`chmod
   +x pdf_reprint.sh`), and 2) to set an alias in your `.bashrc` file.
@@ -81,7 +81,7 @@ Keep a backup of the .pdf to be processed. Though the script may report
 problems while processing the data (or even crash, which may destroy the
 .pdf), it *is not* a PDF validator such as e.g., veraPDF.[^3]
 
-# Benchmark
+## Benchmark
 
 Initially written for Linux Xubuntu 18.04.3 LTS and ghostscript
 (version 9.26), the script is known working well e.g., with
@@ -109,49 +109,71 @@ submitted file after a single run of optimization.
 Typically, the simple reprint `-r` retaining the color is the fastest
 approach to reduce most of the file size in one run and hence already
 *good enough*. How much file size is saved seems to vary not only by the
-relatice amount of special (mathematical) characters, but among journals
+relative amount of special (mathematical) characters, but among journals
 by the same publisher; see for instance the small savings for a reprint
 for *J. Appl. Cryst.* vs. *Helv. Chim. Acta* both published by Wiley.
 
-| source                                                              |        publisher | original | reprint `-r` | saved `%` | reprint `-g` | saved `%` |
-|:--------------------------------------------------------------------|-----------------:|---------:|-------------:|----------:|-------------:|----------:|
-| [2023ACR3640](https://doi.org/10.1021/acs.accounts.3c00588)         |              ACS |   7.0 MB |       4.5 MB |      35.7 |       3.2 MB |      54.3 |
-| [2023ACR3654](https://doi.org/10.1021/acs.accounts.3c00595)         |              ACS |   2.4 MB |       1.6 MB |      33.3 |       1.6 MB |      33.3 |
-| [2023CrystGrowthDes8469](https://doi.org/10.1021/acs.cgd.3c00985)   |              ACS |   3.7 MB |       0.9 MB |      75.7 |       0.9 MB |      75.7 |
-| [2024CrystGrowthDes71](https://doi.org/10.1021/acs.cgd.3c00476)     |              ACS |  10.5 MB |       1.5 MB |      85.7 |       1.4 MB |      86.7 |
-| [2023CRV12135](https://doi.org/10.1021/acs.chemrev.3c00372)         |              ACS |   9.4 MB |       6.1 MB |      35.1 |       5.3 MB |      43.6 |
-| [2023CRV13291](https://doi.org/10.1021/acs.chemrev.3c00241)         |              ACS |  25.5 MB |       4.0 MB |      84.3 |       3.7 MB |      85.5 |
-| [2023CRV13713](https://doi.org/10.1021/acs.chemrev.3c00489)         |              ACS |  12.0 MB |       4.5 MB |      62.5 |       4.2 MB |      65.0 |
-| [2023JCE4674](https://doi.org/10.1021/acs.jchemed.3c00845)          |              ACS |   2.8 MB |       2.2 MB |      21.4 |       2.1 MB |      25.0 |
-| [2023JCE4728](https://doi.org/10.1021/acs.jchemed.3c00306)          |              ACS |   2.6 MB |       1.0 MB |      61.5 |       1.0 MB |      61.5 |
-| [2023JOC16679](https://doi.org/10.1021/acs.joc.3c01753)             |              ACS |   4.7 MB |       3.2 MB |      31.9 |       3.0 MB |      36.2 |
-| [2023JOC16719](https://doi.org/10.1021/acs.joc.3c00815)             |              ACS |   9.9 MB |       2.4 MB |      75.8 |       2.1 MB |      78.8 |
-| [2023OL9002](https://doi.org/10.1021/acs.orglett.3c03590)           |              ACS |   2.4 MB |       1.2 MB |      50.0 |       1.1 MB |      54.2 |
-| [2023OL9243](https://doi.org/10.1021/acs.orglett.3c03993)           |              ACS |   2.2 MB |       1.4 MB |      36.4 |       1.4 MB |      36.4 |
-| [2023Tetrahedron133750](https://doi.org/10.1016/j.tet.2023.133750)  |         Elsevier |   1.2 MB |       1.0 MB |      16.7 |       0.6 MB |      50.0 |
-| [2024Tetrahedron133787](https://doi.org/10.1016/j.tet.2023.133787)  |         Elsevier |   1.9 MB |       1.8 MB |       5.3 |       1.6 MB |      15.8 |
-| [2023TL154433](https://doi.org/10.1016/j.tetlet.2023.154433)        |         Elsevier |   831 kB |       721 kB |      13.2 |       497 kB |      40.2 |
-| [2024TL154885](https://doi.org/10.1016/j.tetlet.2023.154885)        |         Elsevier |   1.6 MB |       0.9 MB |      43.8 |       0.9 MB |      43.8 |
-| [2024PCCP713](https://doi.org/10.1039/d3cp05084j)                   |              RSC |   1.0 MB |       1.0 MB |       0.0 |       0.5 MB |      50.0 |
-| [2024PCCP770](https://doi.org/10.1039/d3cp03800a)                   |              RSC |   2.3 MB |       2.1 MB |       8.7 |       0.8 MB |      65.2 |
-| [2024TheorChemAcc4](https://doi.org/10.1007/s00214-023-03077-7)     |         Springer |   1.7 MB |       0.8 MB |      52.9 |       0.7 MB |      58.8 |
-| [2023TheorChemAcc133](https://doi.org/10.1007/s00214-023-03069-7)   |         Springer |   1.7 MB |       1.0 MB |      41.2 |       1.0 MB |      41.2 |
-| [2024JSulfurChem138](https://doi.org/10.1080/17415993.2023.2255711) | Taylor & Francis |   469 kB |       248 kB |      47.1 |       247 kB |      47.3 |
-| [2023JSulfurChem269](https://doi.org/10.1080/17415993.2022.2164196) | Taylor & Francis |   5.6 MB |       2.9 MB |      48.2 |       2.0 MB |      64.3 |
-| [2023Synthesis3777](https://doi.org/10.1055/a-2126-3774)            |           Thieme |   976 kB |       936 kB |       4.1 |       528 kB |      45.9 |
-| [2023Synthesis3947](https://doi.org/10.1055/s-0042-1751502)         |           Thieme |   2.2 MB |       2.2 MB |       0.0 |       1.9 MB |      13.6 |
-| [2024ACIEe202310983](https://doi.org/10.1002/anie.202310983)        |            Wiley |   877 kB |       800 kB |       8.8 |       507 kB |      42.2 |
-| [2024ACIEe202314446](https://doi.org/10.1002/anie.202314446)        |            Wiley |   2.5 MB |       2.4 MB |       4.0 |       1.2 MB |      52.0 |
-| [2023HCAe202300110](https://doi.org/10.1002/hlca.202300110)         |            Wiley |  10.4 MB |       5.5 MB |      47.1 |       2.9 MB |      72.1 |
-| [2023HCAe202300154](https://doi.org/10.1002/hlca.202300154)         |            Wiley |  10.4 MB |       5.7 MB |      45.2 |       2.2 MB |      78.8 |
-| [2023JApplCryst1618](https://doi.org/10.1107/S1600576723008324)     |            Wiley |   1.1 MB |       1.1 MB |       0.0 |       0.9 MB |      18.2 |
-| [2023JApplCryst1639](https://doi.org/10.1107/S1600576723008439)     |            Wiley |   2.8 MB |       2.7 MB |       3.6 |       1.2 MB |      57.1 |
-| link2web.pdf                                                        |         pdflatex |  38.0 kB |       9.8 kB |      74.2 |       9.8 kB |      74.2 |
+| source | publisher | original | reprint `-r` | saved `%` | reprint `-g` | saved `%` |
+|:---|---:|---:|---:|---:|---:|---:|
+| [2023ACR3640](https://doi.org/10.1021/acs.accounts.3c00588) | ACS | 7.0 MB | 4.5 MB | 35.7 | 3.2 MB | 54.3 |
+| [2023ACR3654](https://doi.org/10.1021/acs.accounts.3c00595) | ACS | 2.4 MB | 1.6 MB | 33.3 | 1.6 MB | 33.3 |
+| [2023CrystGrowthDes8469](https://doi.org/10.1021/acs.cgd.3c00985) | ACS | 3.7 MB | 0.9 MB | 75.7 | 0.9 MB | 75.7 |
+| [2024CrystGrowthDes71](https://doi.org/10.1021/acs.cgd.3c00476) | ACS | 10.5 MB | 1.5 MB | 85.7 | 1.4 MB | 86.7 |
+| [2023CRV12135](https://doi.org/10.1021/acs.chemrev.3c00372) | ACS | 9.4 MB | 6.1 MB | 35.1 | 5.3 MB | 43.6 |
+| [2023CRV13291](https://doi.org/10.1021/acs.chemrev.3c00241) | ACS | 25.5 MB | 4.0 MB | 84.3 | 3.7 MB | 85.5 |
+| [2023CRV13713](https://doi.org/10.1021/acs.chemrev.3c00489) | ACS | 12.0 MB | 4.5 MB | 62.5 | 4.2 MB | 65.0 |
+| [2023JCE4674](https://doi.org/10.1021/acs.jchemed.3c00845) | ACS | 2.8 MB | 2.2 MB | 21.4 | 2.1 MB | 25.0 |
+| [2023JCE4728](https://doi.org/10.1021/acs.jchemed.3c00306) | ACS | 2.6 MB | 1.0 MB | 61.5 | 1.0 MB | 61.5 |
+| [2023JOC16679](https://doi.org/10.1021/acs.joc.3c01753) | ACS | 4.7 MB | 3.2 MB | 31.9 | 3.0 MB | 36.2 |
+| [2023JOC16719](https://doi.org/10.1021/acs.joc.3c00815) | ACS | 9.9 MB | 2.4 MB | 75.8 | 2.1 MB | 78.8 |
+| [2023OL9002](https://doi.org/10.1021/acs.orglett.3c03590) | ACS | 2.4 MB | 1.2 MB | 50.0 | 1.1 MB | 54.2 |
+| [2023OL9243](https://doi.org/10.1021/acs.orglett.3c03993) | ACS | 2.2 MB | 1.4 MB | 36.4 | 1.4 MB | 36.4 |
+| [2023Tetrahedron133750](https://doi.org/10.1016/j.tet.2023.133750) | Elsevier | 1.2 MB | 1.0 MB | 16.7 | 0.6 MB | 50.0 |
+| [2024Tetrahedron133787](https://doi.org/10.1016/j.tet.2023.133787) | Elsevier | 1.9 MB | 1.8 MB | 5.3 | 1.6 MB | 15.8 |
+| [2023TL154433](https://doi.org/10.1016/j.tetlet.2023.154433) | Elsevier | 831 kB | 721 kB | 13.2 | 497 kB | 40.2 |
+| [2024TL154885](https://doi.org/10.1016/j.tetlet.2023.154885) | Elsevier | 1.6 MB | 0.9 MB | 43.8 | 0.9 MB | 43.8 |
+| [2024PCCP713](https://doi.org/10.1039/d3cp05084j) | RSC | 1.0 MB | 1.0 MB | 0.0 | 0.5 MB | 50.0 |
+| [2024PCCP770](https://doi.org/10.1039/d3cp03800a) | RSC | 2.3 MB | 2.1 MB | 8.7 | 0.8 MB | 65.2 |
+| [2024TheorChemAcc4](https://doi.org/10.1007/s00214-023-03077-7) | Springer | 1.7 MB | 0.8 MB | 52.9 | 0.7 MB | 58.8 |
+| [2023TheorChemAcc133](https://doi.org/10.1007/s00214-023-03069-7) | Springer | 1.7 MB | 1.0 MB | 41.2 | 1.0 MB | 41.2 |
+| [2024JSulfurChem138](https://doi.org/10.1080/17415993.2023.2255711) | Taylor & Francis | 469 kB | 248 kB | 47.1 | 247 kB | 47.3 |
+| [2023JSulfurChem269](https://doi.org/10.1080/17415993.2022.2164196) | Taylor & Francis | 5.6 MB | 2.9 MB | 48.2 | 2.0 MB | 64.3 |
+| [2023Synthesis3777](https://doi.org/10.1055/a-2126-3774) | Thieme | 976 kB | 936 kB | 4.1 | 528 kB | 45.9 |
+| [2023Synthesis3947](https://doi.org/10.1055/s-0042-1751502) | Thieme | 2.2 MB | 2.2 MB | 0.0 | 1.9 MB | 13.6 |
+| [2024ACIEe202310983](https://doi.org/10.1002/anie.202310983) | Wiley | 877 kB | 800 kB | 8.8 | 507 kB | 42.2 |
+| [2024ACIEe202314446](https://doi.org/10.1002/anie.202314446) | Wiley | 2.5 MB | 2.4 MB | 4.0 | 1.2 MB | 52.0 |
+| [2023HCAe202300110](https://doi.org/10.1002/hlca.202300110) | Wiley | 10.4 MB | 5.5 MB | 47.1 | 2.9 MB | 72.1 |
+| [2023HCAe202300154](https://doi.org/10.1002/hlca.202300154) | Wiley | 10.4 MB | 5.7 MB | 45.2 | 2.2 MB | 78.8 |
+| [2023JApplCryst1618](https://doi.org/10.1107/S1600576723008324) | Wiley | 1.1 MB | 1.1 MB | 0.0 | 0.9 MB | 18.2 |
+| [2023JApplCryst1639](https://doi.org/10.1107/S1600576723008439) | Wiley | 2.8 MB | 2.7 MB | 3.6 | 1.2 MB | 57.1 |
+| link2web.pdf | pdflatex | 38.0 kB | 9.8 kB | 74.2 | 9.8 kB | 74.2 |
 
-# Footnotes
+## Disclaimer
+
+While rewriting the pdf file in question, the pdf metadata `Producer`
+(which can be an entry like `LaTeX with hyperref`), `CreationDate`, and
+`ModDate` are overwritten. Other metadata such as `TITLE`, `SUBJECT`,
+`KEYWORDS`, and `AUTHOR` are retained. This however does not seem to
+affect the retrieval of bibliographic metadata with a reference manager
+like [zotero](https://www.zotero.org/); presumably, their work accesses
+and relies on the doi string the pdf of a journal publication instead.
+
+On occasion, typographic ligatures like `fi` (as in the string *file*),
+or `fl` (as in *fluid*) are not faithfully processed – the searchable
+text layer of the reprinted pdf might split them, or drop them
+altogether. Apparently, this issue depends both on the version of
+ghostscript installed, and font / pdf-engine of the pdf to be processed
+because recent journal publications (like by ACS, member of STIX
+project[^4] tend to be less frequently affected by this. This
+pdf-reprinter is not tested on pdf about documents predominantly written
+in other scripts than Latin.
+
+## Footnotes
 
 [^1]: <https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1>
 
 [^2]: <https://unix.stackexchange.com/questions/93959/how-to-convert-a-color-pdf-to-black-white>
 
 [^3]: <https://openpreservation.org/tools/verapdf/>
+
+[^4]: <https://en.wikipedia.org/wiki/STIX_Fonts_project>
