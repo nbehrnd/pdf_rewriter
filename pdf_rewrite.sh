@@ -64,7 +64,8 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
     #
     # https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1
     #
-    # so the credit to figuring out the following belongs to him:
+    # so the credit to figuring out the following belongs to him.  Edits
+    # are based on suggestions by shellcheck (version 0.10.0).
 
     file="$2"
     filebase="$(basename "$file" .pdf)"
@@ -80,14 +81,14 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
             rm -f "${optfile}"
             exit;
         fi
-        if [ ${optsize} -ge ${orgsize} ]; then
+        if [ "${optsize}" -ge "${orgsize}" ]; then
             echo "Didn't make it smaller! Keeping original"
             rm -f "${optfile}"
             exit;
         fi
-        bytesSaved=$(expr $orgsize - $optsize)
-        percent=$(expr $optsize '*' 100 / $orgsize)
-        echo Saving $bytesSaved bytes \(now ${percent}% of old\)
+        bytesSaved=$(expr "$orgsize" - "$optsize")
+        percent=$(expr "$optsize" '*' 100 / "$orgsize")
+        echo Saving "$bytesSaved" bytes \(now "${percent}"% of old\)
         rm "${file}"
         mv "${optfile}" "${file}"
     fi
@@ -110,7 +111,8 @@ elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; th
     # Contrasting to the original code, the output is written on expense
     # of the original file.  This prevents overwriting 'grayed .pdf'
     # while processing multiple files in one session.  By dPrinted=false,
-    # hyperlinks remain.
+    # hyperlinks remain.  Edits are based on suggestions by shellcheck
+    # (version 0.10.0).
 
     gs \
      -sOutputFile=output.pdf \
@@ -121,10 +123,10 @@ elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; th
      -dNOPAUSE \
      -dBATCH \
      -dPrinted=false \
-     $2
+     "$2"
 
     # addition, name the output like the original read:
-    mv output.pdf $2
+    mv output.pdf "$2"
 
 #  final coda:
 fi
