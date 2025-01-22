@@ -1,8 +1,8 @@
 
 # name:   readme.org
 # author: nbehrnd@yahoo.com
-# date:   <2019-12-17 Tue>
-# edit:   <2024-01-11 Thu>
+# date:   [2019-12-17 Tue]
+# edit:   [2025-01-22 Wed]
 
 #+OPTIONS:  toc:nil ^:nil
 
@@ -22,7 +22,7 @@
   were joined as provided; thus, the credit belongs to those already
   in the field.
 
-* Intended Use
+** Intended Use
 
   One use consists of 1) the provision of the executable bit (=chmod
   +x pdf_reprint.sh=), and 2) to set an alias in your =.bashrc= file.
@@ -93,7 +93,7 @@
   destroy the .pdf), it /is not/ a PDF validator such as e.g.,
   veraPDF.[fn:verapdf]
 
-* Benchmark
+** Benchmark
 
   Initially written for Linux Xubuntu 18.04.3 LTS and ghostscript
   (version 9.26), the script is known working well e.g., with
@@ -120,7 +120,7 @@
   Typically, the simple reprint =-r= retaining the color is the
   fastest approach to reduce most of the file size in one run and
   hence already /good enough/.  How much file size is saved seems to
-  vary not only by the relatice amount of special (mathematical)
+  vary not only by the relative amount of special (mathematical)
   characters, but among journals by the same publisher; see for
   instance the small savings for a reprint for /J. Appl. Cryst./
   vs. /Helv. Chim. Acta/ both published by Wiley.
@@ -163,11 +163,34 @@
   | link2web.pdf           |         pdflatex |  38.0 kB |       9.8 kB |      74.2 |       9.8 kB |      74.2 |
   #+TBLFM: $5 = (($3 - $4) / $3) * 100; %.1f
   #+TBLFM: $7 = (($3 - $6) / $3) * 100; %.1f
-  
-* Footnotes
+
+** Disclaimer
+
+  While rewriting the pdf file in question, the pdf metadata
+  =Producer= (which can be an entry like =LaTeX with hyperref=),
+  =CreationDate=, and =ModDate= are overwritten.  Other metadata such
+  as =TITLE=, =SUBJECT=, =KEYWORDS=, and =AUTHOR= are retained.  This
+  however does not seem to affect the retrieval of bibliographic
+  metadata with a reference manager like [[https://www.zotero.org/][zotero]]; presumably, their
+  work accesses and relies on the doi string the pdf of a journal
+  publication instead.
+
+  On occasion, typographic ligatures like =fi= (as in the string
+  /file/), or =fl= (as in /fluid/) are not faithfully processed -- the
+  searchable text layer of the reprinted pdf might split them, or drop
+  them altogether.  Apparently, this issue depends both on the version
+  of ghostscript installed, and font / pdf-engine of the pdf to be
+  processed because recent journal publications (like by ACS, member
+  of STIX project[fn:stix] tend to be less frequently affected by
+  this.  This pdf-reprinter is not tested on pdf about documents
+  predominantly written in other scripts than Latin.
+
+** Footnotes
 
 [fn:Langlois] https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1
 
 [fn:slm] https://unix.stackexchange.com/questions/93959/how-to-convert-a-color-pdf-to-black-white
 
 [fn:verapdf] https://openpreservation.org/tools/verapdf/
+
+[fn:stix] https://en.wikipedia.org/wiki/STIX_Fonts_project

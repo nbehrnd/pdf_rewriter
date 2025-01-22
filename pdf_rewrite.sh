@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # name:    pdf_rewrite.sh
 # author:  nbehrnd@yahoo.com
-# license: 2019-2024 MIT
-# date:    <2019-12-17 Tue>
-# edit:    <2024-01-11 Thu>
+# license: 2019-2025 MIT
+# date:    [2019-12-17 Tue]
+# edit:    [2025-01-22 Wed]
 
 # Aiming to reduce file size of a .pdf to be sent as an attachment,
 # this bash script brings finds of different places together.  After
@@ -19,7 +19,8 @@
 #
 # Often, the later still is 'good enough'  especially with modern .pdf
 # by journal publications.  It requires an installation of ghostscript
-# as by typical Linuxes e.g., Xubuntu 18.04.3 LTS (which is gs 9.26).
+# as by typical Linuxes e.g., Xubuntu 22.04 LTS (which is gs 9.55), or
+# Debian 13/trixie (gs 10.04.0).
 #
 # No warranties -- To be used on your own risk.
 
@@ -42,7 +43,7 @@ Parameters available to this script are:
     -c, --colour, --color; -r, or --reprint    reprint in color
     -g, --gray, or --grey                      reprint in gray scale
 
-On occasion, you may loose internal crosslinks (like the table of
+On occasion, you may loose internal cross-links (like the table of
 contents), or hyperlinks to external references may be lost applying
 this.  This depends on the input file -- see the test files of this
 project, or an example like https://doi.org/10.1021/acs.jchemed.7b00361.
@@ -56,15 +57,16 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
     # Sometimes, this removes cross- or / and hyperlinks.  Color and the
     # searchable text layer however typically remain.  It either states
     # the savings obtained, or that a further shrinkage isn't obtained.
-    # The output file will have the same name as the inpupt file.
+    # The output file will have the same name as the input file.
     #
     # Except of the loop to direct the work into this branch, and addition
-    # of the -dPrinted=false instruction to reatin hyperlinks, this is the
+    # of the -dPrinted=false instruction to retain hyperlinks, this is the
     # answer by Evan Langlois to
     #
     # https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1
     #
-    # so the credit to figuring out the following belongs to him:
+    # so the credit to figuring out the following belongs to him.  Edits
+    # are based on suggestions by shellcheck (version 0.10.0).
 
     file="$2"
     filebase="$(basename "$file" .pdf)"
@@ -80,21 +82,21 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
             rm -f "${optfile}"
             exit;
         fi
-        if [ ${optsize} -ge ${orgsize} ]; then
+        if [ "${optsize}" -ge "${orgsize}" ]; then
             echo "Didn't make it smaller! Keeping original"
             rm -f "${optfile}"
             exit;
         fi
-        bytesSaved=$(expr $orgsize - $optsize)
-        percent=$(expr $optsize '*' 100 / $orgsize)
-        echo Saving $bytesSaved bytes \(now ${percent}% of old\)
+        bytesSaved=$(expr "$orgsize" - "$optsize")
+        percent=$(expr "$optsize" '*' 100 / "$orgsize")
+        echo Saving "$bytesSaved" bytes \(now "${percent}"% of old\)
         rm "${file}"
         mv "${optfile}" "${file}"
     fi
 
 elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; then
 
-    # A reprint in grayscale (often sufficent for modern journal .pdf),
+    # A reprint in grayscale (often sufficient for modern journal .pdf),
     # while retaining the searchable text layer.  The script was found
     # on Unix Stackexchange under
     #
@@ -110,7 +112,8 @@ elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; th
     # Contrasting to the original code, the output is written on expense
     # of the original file.  This prevents overwriting 'grayed .pdf'
     # while processing multiple files in one session.  By dPrinted=false,
-    # hyperlinks remain.
+    # hyperlinks remain.  Edits are based on suggestions by shellcheck
+    # (version 0.10.0).
 
     gs \
      -sOutputFile=output.pdf \
@@ -121,10 +124,10 @@ elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; th
      -dNOPAUSE \
      -dBATCH \
      -dPrinted=false \
-     $2
+     "$2"
 
     # addition, name the output like the original read:
-    mv output.pdf $2
+    mv output.pdf "$2"
 
 #  final coda:
 fi
