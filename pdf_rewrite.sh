@@ -42,7 +42,7 @@ Parameters available to this script are:
     -c, --colour, --color; -r, or --reprint    reprint in color
     -g, --gray, or --grey                      reprint in gray scale
 
-On occasion, you may loose internal crosslinks (like the table of
+On occasion, you may loose internal cross-links (like the table of
 contents), or hyperlinks to external references may be lost applying
 this.  This depends on the input file -- see the test files of this
 project, or an example like https://doi.org/10.1021/acs.jchemed.7b00361.
@@ -56,10 +56,10 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
     # Sometimes, this removes cross- or / and hyperlinks.  Color and the
     # searchable text layer however typically remain.  It either states
     # the savings obtained, or that a further shrinkage isn't obtained.
-    # The output file will have the same name as the inpupt file.
+    # The output file will have the same name as the input file.
     #
     # Except of the loop to direct the work into this branch, and addition
-    # of the -dPrinted=false instruction to reatin hyperlinks, this is the
+    # of the -dPrinted=false instruction to retain hyperlinks, this is the
     # answer by Evan Langlois to
     #
     # https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1
@@ -94,7 +94,7 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
 
 elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; then
 
-    # A reprint in grayscale (often sufficent for modern journal .pdf),
+    # A reprint in grayscale (often sufficient for modern journal .pdf),
     # while retaining the searchable text layer.  The script was found
     # on Unix Stackexchange under
     #
