@@ -59,9 +59,7 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
     # the savings obtained, or that a further shrinkage isn't obtained.
     # The output file will have the same name as the input file.
     #
-    # Except of the loop to direct the work into this branch, and addition
-    # of the -dPrinted=false instruction to retain hyperlinks, this is the
-    # answer by Evan Langlois to
+    # Except reformat an few additions, this is the answer by Evan Langlois to
     #
     # https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1
     #
@@ -75,7 +73,16 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
 #            -dPrinted=false -sOutputFile="${optfile}" "${file}"
     gs \
      -sDEVICE=pdfwrite \
-     -dCompatibilityLevel=1.4 \
+     -dDownsampleColorImages=true \
+     -dDownsampleGrayImages=true \
+     -dDownsampleMonoImages=true \
+     -dColorImageResolution=300 \
+     -dGrayImageResolution=300 \
+     -dMonoImageResolutin=300 \
+     -dColorImageDownsampleThreshold=1.0 \
+     -dGrayImageDownsampleThreshold=1.0 \
+     -dMonoImageDownsampleThreshold=1.0 \
+     -dCompatibilityLevel=1.7 \
      -dDetectDuplicateImages=true \
      -dNOPAUSE \
      -dQUIET \
@@ -106,8 +113,8 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
 elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; then
 
     # A reprint in grayscale (often sufficient for modern journal .pdf),
-    # while retaining the searchable text layer.  The script was found
-    # on Unix Stackexchange under
+    # while retaining the searchable text layer.  The initial form of
+    # the script script was found on Unix Stackexchange under
     #
     # https://unix.stackexchange.com/questions/93959/how-to-convert-a-color-pdf-to-black-white
     #
@@ -129,7 +136,10 @@ elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; th
      -sDEVICE=pdfwrite \
      -sColorConversionStrategy=Gray \
      -dProcessColorModel=/DeviceGray \
-     -dCompatibilityLevel=1.4 \
+     -dDownsampleGrayImages=true \
+     -dGrayImageResolution=300 \
+     -dGrayImageDownsampleThreshold=1.0 \
+     -dCompatibilityLevel=1.7 \
      -dDetectDuplicateImages=true \
      -dNOPAUSE \
      -dBATCH \
