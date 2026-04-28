@@ -2,7 +2,7 @@
 # name:   readme.org
 # author: nbehrnd@yahoo.com
 # date:   [2019-12-17 Tue]
-# edit:   [2025-01-22 Wed]
+# edit:   [2026-04-28 Tue]
 
 #+OPTIONS:  toc:nil ^:nil
 

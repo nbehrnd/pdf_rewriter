@@ -4,7 +4,7 @@
 # author:  nbehrnd@yahoo.com
 # license: 2019-2025 MIT
 # date:    [2019-12-17 Tue]
-# edit:    [2025-01-22 Wed]
+# edit:    [2025-04-28 Tue]
 
 # Aiming to reduce file size of a .pdf to be sent as an attachment,
 # this bash script brings finds of different places together.  After
@@ -71,8 +71,16 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
     file="$2"
     filebase="$(basename "$file" .pdf)"
     optfile="/tmp/$$-${filebase}_opt.pdf"
-    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
-            -dPrinted=false -sOutputFile="${optfile}" "${file}"
+#    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
+#            -dPrinted=false -sOutputFile="${optfile}" "${file}"
+    gs \
+     -sDEVICE=pdfwrite \
+     -dCompatibilityLevel=1.4 \
+     -dNOPAUSE \
+     -dQUIET \
+     -dBATCH \
+     -dPrinted=false \
+     -sOutputFile="${optfile}" "${file}"
 
     if [ $? == '0' ]; then
         optsize=$(stat -c "%s" "${optfile}")
