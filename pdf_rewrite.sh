@@ -76,6 +76,7 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
     gs \
      -sDEVICE=pdfwrite \
      -dCompatibilityLevel=1.4 \
+     -dDetectDuplicateImages=true \
      -dNOPAUSE \
      -dQUIET \
      -dBATCH \
@@ -129,6 +130,7 @@ elif [[ "$1" == "-g" ]] || [[ "$1" == "--gray" ]] || [[ "$1" == "--grey" ]] ; th
      -sColorConversionStrategy=Gray \
      -dProcessColorModel=/DeviceGray \
      -dCompatibilityLevel=1.4 \
+     -dDetectDuplicateImages=true \
      -dNOPAUSE \
      -dBATCH \
      -dPrinted=false \
