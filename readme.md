@@ -1,11 +1,14 @@
 # Background
 
 Depending on the pdf creator/engine used, a `.pdf` file may include
-content irrelevant for reading by a human. An example is the inclusion
-of complete sets of fonts though only a few glyphs are (or only one is)
-used on the "electronic paper". To print the `.pdf` with `ghostscript`
-again into a `.pdf` may reduce the file size e.g., prior to organize a
-publication in a reference manager.
+content not this much relevant for reading by a human. Examples include
+bitmap illustrations with a resolution greater than 300 dpi, or color
+images while an illustration in grayscale is good enough. A reprint of
+the `.pdf` again as a pdf with `ghostscript` may address this and yield
+a smaller file size easier to store / to transfer (for instance attached
+to an email). Text-only files print into postscript (e.g., with `a2ps`
+[^1]), then distilled into a pdf equally can benefit from such an
+optimization.
 
 By far, this bash script *does not* claim to be the first one collecting
 bits and bolts to address the issue. It rather serves as an aide-memoire
@@ -15,47 +18,52 @@ the credit belongs to those already in the field.
 
 ## Intended Use
 
-One use consists of 1) the provision of the executable bit (`chmod
-  +x pdf_reprint.sh`), and 2) to set an alias in your `.bashrc` file.
-Then, the functionality described below is available all across your
-system.
+The intended use adds the executable bit to the script
+(`chmod +x   pdf_reprint.sh`) and accesses the functionality by an
+alias. Debian's default shell is BASH; thus, this configuration can be
+set either in file `/etc/bash.bashrc` for any user, in file file
+`~/.bashrc` for the current user; or as a template for any (new) user's
+own file `~/.bashrc` in file `/etc/skel/.bashrc` in a pattern of
 
-- Else, to reprint the `.pdf` while retaining the color, run either one
-  of the following commands
+``` shell
+alias pdf_rewrite="/path/to/pdf_rewrite.sh"
+```
+
+- Presuming the alias to `pdf_rewrite.sh` set is `pdf_rewrite`, run
+  either one of the following commands to reprint the `.pdf` while
+  retaining the color:
 
   ``` shell
-  bash ./pdf_rewrite.sh --reprint input.pdf
-  bash ./pdf_rewrite.sh -r input.pdf
-  bash ./pdf_rewrite.sh --colour input.pdf
-  bash ./pdf_rewrite.sh --color input.pdf
-  bash ./pdf_rewrite.sh -c input.pdf
+  pdf_rewrite --reprint input.pdf
+  pdf_rewrite -r input.pdf
+  pdf_rewrite --colour input.pdf
+  pdf_rewrite --color input.pdf
+  pdf_rewrite -c input.pdf
   ```
 
-  *to replace* the original file `input.pdf` by a new version of smaller
-  file size. There will be a short note if the attempt was successful;
-  and if so, the improvement compared to the original `input.pdf` is
-  reported (percentage). Though you may process the file multiple times
-  with this method, savings in file size often quickly converge to be
-  insignificant in comparison to the remaining file size.
+  If the reprint is smaller in size than the original file, the reprint
+  replaces the original file. In addition, a brief note states the
+  percentage of the savings achieved. If wanted, you may repeat the
+  reprint; eventually, either the savings are insignificant in
+  comparison to the remaining file size, or the script itself will
+  report no change and thus retain the original file.
 
   The credit for the underlying approach and implementation belongs to
-  Evan Langlois.[^1]
+  Evan Langlois.[^2]
 
-- Often, an additional reduction of file size may be obtained by
-  reprinting the `.pdf` in gray-scale only. Either one of the following
-  commands to the script is equivalent
+- Often, a reprint in grayscale is sufficient. Use either one of the
+  following commands
 
   ``` shell
-  bash ./pdf_rewrite.sh --gray input.pdf
-  bash ./pdf_rewrite.sh --grey input.pdf
-  bash ./pdf_rewrite.sh -g input.pdf
+  pdf_rewrite --gray input.pdf
+  pdf_rewrite --grey input.pdf
+  pdf_rewrite -g input.pdf
   ```
 
-  to replace file `input.pdf` by its rewritten form. The credit for this
-  approach belongs to user `slm` on the Unix stackexchange.[^2]
+  to overwrite file `input.pdf` accordingly. The credit for this
+  approach belongs to user `slm` on the Unix stackexchange.[^3]
 
-- To process multiple `.pdf`, a for-loop in your shell could follow the
-  pattern of
+- To process multiple `.pdf`, you may consider a for loop as in
 
   ``` shell
   for file in *.pdf
@@ -65,115 +73,110 @@ system.
   done
   ```
 
-  This equally provides you a brief progress report, too.
+  This approach equally provides you a brief progress report, too.
 
-Note, this script's primary aim is to obtain a file of small file size,
-e.g., as an attachment of an email while retaining the text easy to read
-and – if present – to retain a text layer searchable. Especially the
-reprint in half-tones however may render illustrations less
-intelligible. It is up to the creators of figures to use easy
-discernible markers in diagrams, as well as to use color scales suitable
-for the color blind, and safe for this mimicked "photocopying". For the
-later, a service like <https://colorbrewer2.org/> may guide your
-selection.
+Note, illustrations in a reprint in grayscale may render illustrations
+less intelligible. When preparing a document, a service like
+<https://colorbrewer2.org/> may guide your selection for color palettes
+suitable for this kind of "photocopying" / identify a palette safe for
+the color blind.
 
 Keep a backup of the .pdf to be processed. Though the script may report
 problems while processing the data (or even crash, which may destroy the
-.pdf), it *is not* a PDF validator such as e.g., veraPDF.[^3]
+.pdf), it *is not* a PDF validator such as e.g., veraPDF.[^4]
 
 ## Benchmark
 
 Initially written for Linux Xubuntu 18.04.3 LTS and ghostscript
-(version 9.26), the script is known working well e.g., with
-Debian 13/trixie (currently *testing*) and GPL Ghostscript
-(version 10.02.1 published by 2023-11-01).
+(version 9.26), the script is known to work well for instance with
+Debian 13/trixie and GPL Ghostscript (version 10.05.1).
 
-- File `link2web.pdf` was compiled with pdfLaTeX based on an example
-  provided by
+- File `link2web.pdf` included to the project was compiled with pdfLaTeX
+  based on an example provided by
   [www.texample.net](http://www.texample.net/tikz/examples/lune-of-hippocrates/).
   This .pdf contains a color figure and link to an external reference.
   Note, the simplification into half-tones (option `-g`) affects the
-  document printed, depending on the pdf viewer used, the box around the
-  link may remain colored *for the display on screen*.
+  document printed; depending on the pdf viewer used, the highlighting
+  box around the link may remain colored *for the display on screen*.
 
 - The performance of the utility was tested on a couple of recent
-  publications in chemistry. To ease a potential replication,
-  publications used for the bench marke are – within reason – available
-  open access/CC.
+  publications in chemistry and gs (10.07.0) as currently provided in
+  Debian 14/forky (currently branch testing). To ease a replication,
+  only *open access* publications used for the bench mark were used.
 
-In the table below, *savings* computes the difference of the file size
-prior and after the processing with either option, then reports this
-change as percentage in respect to the file size of the originally
-submitted file after a single run of optimization.
+The table below compares the difference of the file size prior and after
+the processing with either option after a single run of optimization.
 
-Typically, the simple reprint `-r` retaining the color is the fastest
-approach to reduce most of the file size in one run and hence already
-*good enough*. How much file size is saved seems to vary not only by the
-relative amount of special (mathematical) characters, but among journals
-by the same publisher; see for instance the small savings for a reprint
-for *J. Appl. Cryst.* vs. *Helv. Chim. Acta* both published by Wiley.
-
-| source | publisher | original | reprint `-r` | saved `%` | reprint `-g` | saved `%` |
+| journal | publisher | original | with `-r` | saved `%` | with `-g` | saved `%` |
 |:---|---:|---:|---:|---:|---:|---:|
-| [2023ACR3640](https://doi.org/10.1021/acs.accounts.3c00588) | ACS | 7.0 MB | 4.5 MB | 35.7 | 3.2 MB | 54.3 |
-| [2023ACR3654](https://doi.org/10.1021/acs.accounts.3c00595) | ACS | 2.4 MB | 1.6 MB | 33.3 | 1.6 MB | 33.3 |
-| [2023CrystGrowthDes8469](https://doi.org/10.1021/acs.cgd.3c00985) | ACS | 3.7 MB | 0.9 MB | 75.7 | 0.9 MB | 75.7 |
-| [2024CrystGrowthDes71](https://doi.org/10.1021/acs.cgd.3c00476) | ACS | 10.5 MB | 1.5 MB | 85.7 | 1.4 MB | 86.7 |
-| [2023CRV12135](https://doi.org/10.1021/acs.chemrev.3c00372) | ACS | 9.4 MB | 6.1 MB | 35.1 | 5.3 MB | 43.6 |
-| [2023CRV13291](https://doi.org/10.1021/acs.chemrev.3c00241) | ACS | 25.5 MB | 4.0 MB | 84.3 | 3.7 MB | 85.5 |
-| [2023CRV13713](https://doi.org/10.1021/acs.chemrev.3c00489) | ACS | 12.0 MB | 4.5 MB | 62.5 | 4.2 MB | 65.0 |
-| [2023JCE4674](https://doi.org/10.1021/acs.jchemed.3c00845) | ACS | 2.8 MB | 2.2 MB | 21.4 | 2.1 MB | 25.0 |
-| [2023JCE4728](https://doi.org/10.1021/acs.jchemed.3c00306) | ACS | 2.6 MB | 1.0 MB | 61.5 | 1.0 MB | 61.5 |
-| [2023JOC16679](https://doi.org/10.1021/acs.joc.3c01753) | ACS | 4.7 MB | 3.2 MB | 31.9 | 3.0 MB | 36.2 |
-| [2023JOC16719](https://doi.org/10.1021/acs.joc.3c00815) | ACS | 9.9 MB | 2.4 MB | 75.8 | 2.1 MB | 78.8 |
-| [2023OL9002](https://doi.org/10.1021/acs.orglett.3c03590) | ACS | 2.4 MB | 1.2 MB | 50.0 | 1.1 MB | 54.2 |
-| [2023OL9243](https://doi.org/10.1021/acs.orglett.3c03993) | ACS | 2.2 MB | 1.4 MB | 36.4 | 1.4 MB | 36.4 |
-| [2023Tetrahedron133750](https://doi.org/10.1016/j.tet.2023.133750) | Elsevier | 1.2 MB | 1.0 MB | 16.7 | 0.6 MB | 50.0 |
-| [2024Tetrahedron133787](https://doi.org/10.1016/j.tet.2023.133787) | Elsevier | 1.9 MB | 1.8 MB | 5.3 | 1.6 MB | 15.8 |
-| [2023TL154433](https://doi.org/10.1016/j.tetlet.2023.154433) | Elsevier | 831 kB | 721 kB | 13.2 | 497 kB | 40.2 |
-| [2024TL154885](https://doi.org/10.1016/j.tetlet.2023.154885) | Elsevier | 1.6 MB | 0.9 MB | 43.8 | 0.9 MB | 43.8 |
-| [2024PCCP713](https://doi.org/10.1039/d3cp05084j) | RSC | 1.0 MB | 1.0 MB | 0.0 | 0.5 MB | 50.0 |
-| [2024PCCP770](https://doi.org/10.1039/d3cp03800a) | RSC | 2.3 MB | 2.1 MB | 8.7 | 0.8 MB | 65.2 |
-| [2024TheorChemAcc4](https://doi.org/10.1007/s00214-023-03077-7) | Springer | 1.7 MB | 0.8 MB | 52.9 | 0.7 MB | 58.8 |
-| [2023TheorChemAcc133](https://doi.org/10.1007/s00214-023-03069-7) | Springer | 1.7 MB | 1.0 MB | 41.2 | 1.0 MB | 41.2 |
-| [2024JSulfurChem138](https://doi.org/10.1080/17415993.2023.2255711) | Taylor & Francis | 469 kB | 248 kB | 47.1 | 247 kB | 47.3 |
-| [2023JSulfurChem269](https://doi.org/10.1080/17415993.2022.2164196) | Taylor & Francis | 5.6 MB | 2.9 MB | 48.2 | 2.0 MB | 64.3 |
-| [2023Synthesis3777](https://doi.org/10.1055/a-2126-3774) | Thieme | 976 kB | 936 kB | 4.1 | 528 kB | 45.9 |
-| [2023Synthesis3947](https://doi.org/10.1055/s-0042-1751502) | Thieme | 2.2 MB | 2.2 MB | 0.0 | 1.9 MB | 13.6 |
-| [2024ACIEe202310983](https://doi.org/10.1002/anie.202310983) | Wiley | 877 kB | 800 kB | 8.8 | 507 kB | 42.2 |
-| [2024ACIEe202314446](https://doi.org/10.1002/anie.202314446) | Wiley | 2.5 MB | 2.4 MB | 4.0 | 1.2 MB | 52.0 |
-| [2023HCAe202300110](https://doi.org/10.1002/hlca.202300110) | Wiley | 10.4 MB | 5.5 MB | 47.1 | 2.9 MB | 72.1 |
-| [2023HCAe202300154](https://doi.org/10.1002/hlca.202300154) | Wiley | 10.4 MB | 5.7 MB | 45.2 | 2.2 MB | 78.8 |
-| [2023JApplCryst1618](https://doi.org/10.1107/S1600576723008324) | Wiley | 1.1 MB | 1.1 MB | 0.0 | 0.9 MB | 18.2 |
-| [2023JApplCryst1639](https://doi.org/10.1107/S1600576723008439) | Wiley | 2.8 MB | 2.7 MB | 3.6 | 1.2 MB | 57.1 |
-| link2web.pdf | pdflatex | 38.0 kB | 9.8 kB | 74.2 | 9.8 kB | 74.2 |
+| [2023ACR3654](https://doi.org/10.1021/acs.accounts.3c00595) | ACS | 2.8 MB | 1.6 MB | 42.9 | 1.6 MB | 42.9 |
+| [2026ACR1414](https://doi.org/10.1021/acs.accounts.6c00055) | ACS | 9.1 MB | 1.9 MB | 79.1 | 1.8 MB | 80.2 |
+| [2023CrystGrowthDes8469](https://doi.org/10.1021/acs.cgd.3c00985) | ACS | 3.7 MB | 0.7 MB | 81.1 | 0.7 MB | 81.1 |
+| [2026CrystGrowthDes2939](https://doi.org/10.1021/acs.cgd.5c01622) | ACS | 8.2 MB | 2.0 MB | 75.6 | 1.8 MB | 78.0 |
+| [2023CRV13291](https://doi.org/10.1021/acs.chemrev.3c00241) | ACS | 25.5 MB | 3.5 MB | 86.3 | 3.3 MB | 87.1 |
+| [2026CRV4375](https://doi.org/10.1021/acs.chemrev.5c00618) | ACS | 12.6 MB | 2.6 MB | 79.4 | 2.5 MB | 80.2 |
+| [2023JCE4728](https://doi.org/10.1021/acs.jchemed.3c00306) | ACS | 3.1 MB | 1.0 MB | 67.7 | 1.0 MB | 67.7 |
+| [2026JCE1723](https://doi.org/10.1021/acs.jchemed.5c00204) | ACS | 3.2 MB | 1.2 MB | 62.5 | 1.2 MB | 62.5 |
+| [2023JOC16719](https://doi.org/10.1021/acs.joc.3c00815) | ACS | 9.9 MB | 2.3 MB | 76.8 | 2.0 MB | 79.8 |
+| [2026JOC5520](https://doi.org/10.1021/acs.joc.6c00017) | ACS | 5.4 MB | 2.0 MB | 63.0 | 1.8 MB | 66.7 |
+| [2023OL9243](https://doi.org/10.1021/acs.orglett.3c03993) | ACS | 2.2 MB | 1.4 MB | 36.4 | 1.3 MB | 40.9 |
+| [2026OL5021](https://doi.org/10.1021/acs.orglett.5c04734) | ACS | 2.5 MB | 1.4 MB | 44.0 | 1.4 MB | 44.0 |
+| [2026Tetrahedron135290](https://doi.org/10.1016/j.tet.2026.135290) | Elsevier | 2.4 MB | 2.2 MB | 8.3 | 1.4 MB | 41.7 |
+| [2026Tetrahedron135286](https://doi.org/10.1016/j.tet.2026.135286) | Elsevier | 1.1 MB | 1.0 MB | 9.1 | 0.9 MB | 18.2 |
+| [2026TL156046](https://doi.org/10.1016/j.tetlet.2026.156046) | Elsevier | 498 kB | 374 kB | 24.9 | 286 kB | 42.6 |
+| [2026TL156057](https://doi.org/10.1016/j.tetlet.2026.156047) | Elsevier | 2.1 MB | 2.0 MB | 4.8 | 0.5 MB | 76.2 |
+| [2024PCCP770](https://doi.org/10.1039/d3cp03800a) | RSC | 2.3 MB | 1.3 MB | 43.5 | 0.9 MB | 60.9 |
+| [2026PCCP9840](https://doi.org/10.1039/D5CP04712A) | RSC | 5.3 MB | 1.9 MB | 64.2 | 1.3 MB | 75.5 |
+| [2024TheorChemAcc4](https://doi.org/10.1007/s00214-023-03077-7) | Springer | 1.8 MB | 0.7 MB | 61.1 | 0.7 MB | 61.1 |
+| [2026TheorChemAcc25](https://doi.org/10.1007/s00214-026-03274-0) | Springer | 1.5 MB | 0.9 MB | 40.0 | 0.9 MB | 40.0 |
+| [2023Synthesis3777](https://doi.org/10.1055/a-2126-3774) | Thieme | 976 kB | 949 kB | 2.8 | 540 kB | 44.7 |
+| [2026Synthesis910](https://doi.org/10.1055/a-2759-6397) | Thieme | 759 kB | 438 kB | 42.3 | 436 kB | 42.6 |
+| [2024ACIEe202314446](https://doi.org/10.1002/anie.202314446) | Wiley | 2.5 MB | 1.3 MB | 48.0 | 0.8 MB | 68.0 |
+| [2026ACIEe26144](https://doi.org/10.1002%2Fanie.202526144) | Wiley | 5.3 MB | 4.0 MB | 24.5 | 2.9 MB | 45.3 |
+| [2023HCAe202300110](https://doi.org/10.1002/hlca.202300110) | Wiley | 10.4 MB | 1.2 MB | 88.5 | 1.2 MB | 88.5 |
+| [2026HCA0:e00224](https://doi.org/10.1002%2Fhlca.202500224) | Wiley | 4.1 MB | 1.3 MB | 68.3 | 1.3 MB | 68.3 |
+| [2023JApplCryst1639](https://doi.org/10.1107/S1600576723008439) | Wiley | 1.1 MB | 0.7 MB | 36.4 | 0.7 MB | 36.4 |
+| [2026JApplCryst291](https://doi.org/10.1107/S1600576726000063) | Wiley | 7.3 MB | 1.3 MB | 82.2 | 0.7 MB | 90.4 |
+| [2026BJoc672](https://doi.org/10.3762/bjoc.22.51) | Beilstein | 1.6 MB | 0.5 MB | 68.8 | 0.3 MB | 81.2 |
+| [2026BJoc620](https://doi.org/10.3762/bjoc.22.48) | Beilstein | 461 kB | 461 kB | 0.0 | 350 kB | 24.1 |
+| [2026Molecules1499](https://doi.org/10.3390/molecules31091499) | MDPI | 771 kB | 558 kB | 27.6 | 328 kB | 57.5 |
+| [2026Molecules1495](https://doi.org/10.3390/molecules31091495) | MDPI | 2.8 MB | 0.8 MB | 71.4 | 0.6 MB | 78.6 |
+| [2026JOSS0825](https://joss.theoj.org/papers/10.21105/joss.08025) | JOSS | 213 kB | 84 kB | 60.6 | 84 kB | 60.6 |
+| [2026JOSS09890](https://joss.theoj.org/papers/10.21105/joss.09890) | JOSS | 921 kB | 392 kB | 57.4 | 246 kB | 73.3 |
+| [arXiv:2605.00564v1](https://arxiv.org/abs/2605.00564) | arxiv | 3.1 MB | 1.4 MB | 54.8 | 0.9 MB | 71.0 |
+| [arXiv:2605.00149v1](https://arxiv.org/abs/2605.00149) | arxiv | 371 kB | 232 kB | 37.5 | 232 kB | 37.5 |
+| link2web.pdf | pdflatex | 38.9 kB | 10.7 kB | 72.5 | 10.6 kB | 72.8 |
 
 ## Disclaimer
 
-While rewriting the pdf file in question, the pdf metadata `Producer`
-(which can be an entry like `LaTeX with hyperref`), `CreationDate`, and
-`ModDate` are overwritten. Other metadata such as `TITLE`, `SUBJECT`,
-`KEYWORDS`, and `AUTHOR` are retained. This however does not seem to
-affect the retrieval of bibliographic metadata with a reference manager
-like [zotero](https://www.zotero.org/); presumably, their work accesses
-and relies on the doi string the pdf of a journal publication instead.
+By inspection with the utilities of `pdfinfo` and `exiftools`, the
+rewrite overwrites pdf metadata such as `Producer` (which can be an
+entry like `LaTeX with hyperref`), `CreationDate`, and `ModDate`, while
+others are lost for good. With metadata such as `TITLE`, `SUBJECT`,
+`KEYWORDS`, and `AUTHOR` typically retained, a reference manager like
+manager [zotero](https://www.zotero.org/) (tested with version 9.0.1)
+still can collect complementary bibliographic metadata.
 
-On occasion, typographic ligatures like `fi` (as in the string *file*),
-or `fl` (as in *fluid*) are not faithfully processed – the searchable
-text layer of the reprinted pdf might split them, or drop them
-altogether. Apparently, this issue depends both on the version of
-ghostscript installed, and font / pdf-engine of the pdf to be processed
-because recent journal publications (like by ACS, member of STIX
-project[^4] tend to be less frequently affected by this. This
-pdf-reprinter is not tested on pdf about documents predominantly written
-in other scripts than Latin.
+A conversion to grayscale is more likely to be successful if the pdf of
+interest is converted directly. This seems especially the case if the
+document includes ligatures like `fl`, `fl`, `ae`, `oe`, umlauts in the
+Latin script; if the (intermediate) color retaining reprint failed to
+properly define these, a subsequent reprint constraint to gray scale may
+yield a gap. This issue depends both on the version of ghostscript
+installed, and font / pdf-engine of the pdf to be processed because
+recent journal publications (like by ACS, member of STIX project[^5]
+tend to be less frequently affected by this. This pdf-reprinter is not
+tested on pdf about documents predominantly written in other scripts
+than Latin.
 
 ## Footnotes
 
-[^1]: <https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1>
+[^1]: <https://www.gnu.org/software/a2ps/>
 
-[^2]: <https://unix.stackexchange.com/questions/93959/how-to-convert-a-color-pdf-to-black-white>
+[^2]: <https://tex.stackexchange.com/questions/18987/how-to-make-the-pdfs-produced-by-pdflatex-smaller?rq=1>
 
-[^3]: <https://openpreservation.org/tools/verapdf/>
+[^3]: <https://unix.stackexchange.com/questions/93959/how-to-convert-a-color-pdf-to-black-white>
 
-[^4]: <https://en.wikipedia.org/wiki/STIX_Fonts_project>
+[^4]: <https://openpreservation.org/tools/verapdf/>
+
+[^5]: <https://en.wikipedia.org/wiki/STIX_Fonts_project>
