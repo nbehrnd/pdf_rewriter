@@ -1,0 +1,37 @@
+# date: [2025-06-23 Tue]
+# edit:
+#
+# Notes:
+#
+# - the installation by `pre-commit install` creates the local folder
+#   `~/.cache/pre-commit` in with the data supporting the hooks' work
+# - while editing the Python scripts, `pre-commit run --all-files` allows
+#   to launch the tests separately and prior to e.g., `git add *.py`
+# - if necessary, `git commit -m "commit message" --no-verify` allows to
+#   bypass the tests altogether.
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v6.0.0"
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-illegal-windows-names
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-yaml
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: name-tests-test
+        args: ["--pytest-test-first"]
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+        name: codespell
+        args: [--config=.codespellrc]
