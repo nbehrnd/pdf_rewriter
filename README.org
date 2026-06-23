@@ -84,7 +84,7 @@
     done
     #+end_src
 
-    This approach equally provides you a brief progress report, too. 
+    This approach equally provides you a brief progress report, too.
 
   Note, illustrations in a reprint in grayscale may render
   illustrations less intelligible.  When preparing a document, a
@@ -116,7 +116,7 @@
     in Debian 14/forky (currently branch testing).  To ease a
     replication, only /open access/ publications used for the bench
     mark were used.
-    
+
   The table below compares the difference of the file size prior and
   after the processing with either option after a single run of
   optimization.

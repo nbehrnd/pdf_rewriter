@@ -1,0 +1,4 @@
+[codespell]
+skip = *.pdf
+ignore-words-list = proTeXt, protext
+write-changes = false
