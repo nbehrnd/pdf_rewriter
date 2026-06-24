@@ -71,7 +71,7 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
     optfile="/tmp/$$-${filebase}_opt.pdf"
 #    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
 #            -dPrinted=false -sOutputFile="${optfile}" "${file}"
-    gs \
+    if gs \
      -sDEVICE=pdfwrite \
      -dDownsampleColorImages=true \
      -dDownsampleGrayImages=true \
@@ -88,9 +88,8 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
      -dQUIET \
      -dBATCH \
      -dPrinted=false \
-     -sOutputFile="${optfile}" "${file}"
+     -sOutputFile="${optfile}" "${file}"; then
 
-    if [ $? == '0' ]; then
         optsize=$(stat -c "%s" "${optfile}")
         orgsize=$(stat -c "%s" "${file}")
         if [ "${optsize}" -eq 0 ]; then
