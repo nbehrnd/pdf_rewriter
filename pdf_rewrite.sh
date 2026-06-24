@@ -2,9 +2,9 @@
 
 # name:    pdf_rewrite.sh
 # author:  nbehrnd@yahoo.com
-# license: 2019-2025 MIT
+# license: MIT
 # date:    [2019-12-17 Tue]
-# edit:    [2025-04-28 Tue]
+# edit:    [2026-06-24 Wed]
 
 # Aiming to reduce file size of a .pdf to be sent as an attachment,
 # this bash script brings finds of different places together.  After
@@ -71,7 +71,7 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
     optfile="/tmp/$$-${filebase}_opt.pdf"
 #    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
 #            -dPrinted=false -sOutputFile="${optfile}" "${file}"
-    gs \
+    if gs \
      -sDEVICE=pdfwrite \
      -dDownsampleColorImages=true \
      -dDownsampleGrayImages=true \
@@ -88,9 +88,8 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
      -dQUIET \
      -dBATCH \
      -dPrinted=false \
-     -sOutputFile="${optfile}" "${file}"
+     -sOutputFile="${optfile}" "${file}"; then
 
-    if [ $? == '0' ]; then
         optsize=$(stat -c "%s" "${optfile}")
         orgsize=$(stat -c "%s" "${file}")
         if [ "${optsize}" -eq 0 ]; then
@@ -103,8 +102,8 @@ elif [[ "$1" == "-c" || "$1" == "-r" || "$1" == "--colour" || "$1" == "--color" 
             rm -f "${optfile}"
             exit;
         fi
-        bytesSaved=$(expr "$orgsize" - "$optsize")
-        percent=$(expr "$optsize" '*' 100 / "$orgsize")
+        bytesSaved=$(("$orgsize" - "$optsize"))
+        percent=$(("$optsize" * 100 / "$orgsize"))
         echo Saving "$bytesSaved" bytes \(now "${percent}"% of old\)
         rm "${file}"
         mv "${optfile}" "${file}"
