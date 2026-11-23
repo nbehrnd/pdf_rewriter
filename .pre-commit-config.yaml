@@ -1,14 +1,11 @@
-# date: [2026-06-23 Tue]
-# edit: [2026-06-24 Wed]
-#
 # Notes:
 #
-# - the installation by `pre-commit install` creates the local folder
-#   `~/.cache/pre-commit` in with the data supporting the hooks' work
-# - while editing the Python scripts, `pre-commit run --all-files` allows
-#   to launch the tests separately and prior to e.g., `git add *.py`
-# - if necessary, `git commit -m "commit message" --no-verify` allows to
-#   bypass the tests altogether.
+# - activation | deactivation: pre-commit install | uninstall
+# - use on each file: pre-commt run --all-files
+# - commit without a check: git commit -m "message" --no-verify
+#
+# An installation by `pre-commit install` creates the local folder
+# `~/.cache/pre-commit` in with the data supporting the hooks' work.
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
